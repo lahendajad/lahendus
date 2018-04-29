@@ -1,35 +1,21 @@
-buildscript {
-	ext {
-		springBootVersion = '2.0.1.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+group = 'lahendus'
+version = '0.0.1-alpha'
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-
-group = 'net.lahendajad'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
-
-repositories {
-	mavenCentral()
+//    Tasks - Application
+task bootFullApplication(type: GradleBuild) {
+    group 'application'
+    setTasks([':client:npmUpdate', ':client:clean', ':client:buildClientToSpring', ':backend:bootRun'])
 }
 
-
-dependencies {
-	compile('org.springframework.boot:spring-boot-starter-actuator')
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-data-rest')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	runtime('com.h2database:h2')
-	compileOnly('org.projectlombok:lombok')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+//    Tasks - Init project
+task wrapper(type: Wrapper) {
+    group 'init'
+    gradleVersion '4.7'
+    distributionType Wrapper.DistributionType.ALL
 }

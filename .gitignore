@@ -1,51 +1,86 @@
-.gradle
-/build/
+ Java Generated
+*.class
+*.jar
+*.war
+*.ear
+
+
+# Gradle
+*/.gradle/
+.gradle/
 !gradle/wrapper/gradle-wrapper.jar
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
 
-### IntelliJ IDEA ###
-.idea
+# Compiler
+*/bin/
+*/build/
+*/targer/
+*/out/
+
+
+# IntelliJ Generated
+.idea/
 *.iws
 *.iml
 *.ipr
-/out/
 
-### NetBeans ###
-/nbproject/private/
-/build/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
 
-# Created by https://www.gitignore.io/api/angular
+# Front End Dependency Generated
+client/.sass-cache/
+client/bower_components/
+client/npm-debug.log
+client/.tscache/
+client/scss/.tmp/
+client/js/lib/
+client/typings/
+client/coverage/
+*/tmp/
+*/out-tsc/
 
-### Angular ###
-## Angular ##
+client/dist/
+client/node/
+client/node/*
+*/node_modules/
+dist/
+
+
+# Application
+backend/src/main/resources/static
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
 # compiled output
 /dist
+/dist-server
 /tmp
-/app/**/*.js
-/app/**/*.js.map
+/out-tsc
 
 # dependencies
 /node_modules
-/bower_components
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
 # misc
 /.sass-cache
 /connect.lock
-/coverage/*
+/coverage
 /libpeerconnection.log
 npm-debug.log
+yarn-error.log
 testem.log
 /typings
 
@@ -53,7 +88,6 @@ testem.log
 /e2e/*.js
 /e2e/*.map
 
-#System Files
+# System Files
 .DS_Store
-
-# End of https://www.gitignore.io/api/angular
+Thumbs.db

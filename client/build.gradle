@@ -1,0 +1,100 @@
+buildscript {
+    ext {
+        gradleNodeVersion = '1.2.0'
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+
+    dependencies {
+        classpath "com.moowork.gradle:gradle-node-plugin:$gradleNodeVersion"
+    }
+}
+
+
+
+//------------------------------------------------------------------------------------------------------------------------
+//    Plugins - Application
+//------------------------------------------------------------------------------------------------------------------------
+
+apply plugin: 'com.moowork.node'
+
+//------------------------------------------------------------------------------------------------------------------------
+//    Plugin configuration
+//------------------------------------------------------------------------------------------------------------------------
+
+node {
+    version = '8.11.1'
+    npmVersion = '6.0.0'
+    download = true
+    workDir = file("${rootDir}/client/node")
+    nodeModulesDir = file("${rootDir}/client")
+}
+
+
+
+//------------------------------------------------------------------------------------------------------------------------
+//    Tasks - NPM
+//------------------------------------------------------------------------------------------------------------------------
+
+task clean(type: Delete) {
+    group 'build client'
+    delete "${rootDir}/client/dist", "${rootDir}/backend/src/main/resources/static"
+}
+
+task cleanNpm(type: Delete) {
+    group 'build client'
+    dependsOn 'clean'
+    delete "${rootDir}/client/node", "${rootDir}/client/node_modules"
+}
+
+task npmUpdate {
+    group 'build client'
+    dependsOn 'npm_update'
+}
+
+//------------------------------------------------------------------------------------------------------------------------
+//    Tasks - Standalone client
+//------------------------------------------------------------------------------------------------------------------------
+
+task buildStandaloneClient(type: NpmTask, dependsOn: npmInstall) {
+    group 'build client'
+    description = 'Compile client side folder for development'
+    args = ['run', 'buildStandalone']
+}
+
+task serveStandaloneClientWatch(type: NpmTask, dependsOn: npmInstall) {
+    group 'build client'
+    description = "Builds, serves and watches the client side assets for rebuilding"
+    args = ['run', 'serveStandaloneWatch']
+}
+
+task serveStandaloneClient(type: NpmTask, dependsOn: npmInstall) {
+    group 'build client'
+    description = "Compile client side folder for production"
+    args = ['start']
+}
+
+task bootStandaloneClient(type: GradleBuild) {
+    group 'application'
+    setTasks(['clean', 'buildStandaloneClient', 'serveStandaloneClient'])
+//    finalizedBy 'npm_shutdown'
+}
+
+task bootStandaloneClientWatch(type: GradleBuild) {
+    group 'application'
+    setTasks(['clean', 'serveStandaloneClientWatch'])
+//    finalizedBy 'npm_shutdown'
+}
+
+//------------------------------------------------------------------------------------------------------------------------
+//    Tasks - Integrated client
+//------------------------------------------------------------------------------------------------------------------------
+
+task buildClientToSpring(type: NpmTask, dependsOn: npmInstall) {
+    group 'build client'
+    description = 'Compile client side folder for development'
+    args = ['run', 'buildToSpring']
+}
