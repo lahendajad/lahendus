@@ -39,7 +39,6 @@ task bootStandaloneBackend {
 }
 
 jar.dependsOn ':client:buildClientToSpring'
-war.dependsOn ':client:buildClientToSpring'
 
 //------------------------------------------------------------------------------------------------------------------------
 //    Dependencies
