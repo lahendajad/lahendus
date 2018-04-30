@@ -12,33 +12,34 @@ buildscript {
     }
 }
 
-//------------------------------------------------------------------------------------------------------------------------
 //    Plugins - Application
-//------------------------------------------------------------------------------------------------------------------------
-
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'java'
+//apply plugin: 'war'
 
-//------------------------------------------------------------------------------------------------------------------------
 //    Plugins - Configuration
-//------------------------------------------------------------------------------------------------------------------------
-
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-//------------------------------------------------------------------------------------------------------------------------
 //    Tasks - Standalone backend
-//------------------------------------------------------------------------------------------------------------------------
-
 task bootStandaloneBackend {
     group 'application'
     dependsOn bootRun
 }
 
 jar.dependsOn ':client:buildClientToSpring'
+//war.dependsOn ':client:buildClientToSpring'
+
+//war {
+//    baseName = 'spring5_angular4_demo'
+//    version =  '1.0'
+//    manifest {
+//        attributes 'Main-Class': 'angularboot.AngularBootApplication'
+//    }
+//}
 
 //------------------------------------------------------------------------------------------------------------------------
 //    Dependencies
