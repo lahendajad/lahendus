@@ -1,0 +1,22 @@
+swagger: "2.0"
+info:
+  version: "1"
+  title: "Parem lahendus"
+host: "api.lahendus.net"
+basePath: "/"
+schemes:
+- "https"
+paths:
+  "/sample":
+    get:
+      parameters:
+        - name: "in-query"
+          in: "query"
+          required: true
+          type: string
+      responses:
+        200:
+          description: "OK"
+          schema:
+            description: "Sample desc"
+            type: string
