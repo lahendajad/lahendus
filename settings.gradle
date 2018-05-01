@@ -1,4 +1,3 @@
-rootProject.name = 'lahendus'
+rootProject.name = 'net.lahendus'
 
-include 'client',
-        'backend'
+include 'ui', 'api'
