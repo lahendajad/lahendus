@@ -1,0 +1,3 @@
+task serveUI(type: Exec) {
+  commandLine 'cmd','/c','ng serve --open'
+}
