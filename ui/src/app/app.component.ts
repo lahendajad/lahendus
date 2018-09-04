@@ -16,7 +16,11 @@ export class AppComponent {
 
     helloWorld() {
         let headers = new HttpHeaders({'JWT-Header-Payload': this.JWTPayload});
-        this.http.get("http://localhost:8080/test", {headers: headers, withCredentials: true}).subscribe();
+        this.http.get("http://localhost:8080/test", {observe: 'response', headers: headers, withCredentials: true})
+            .subscribe(resp => {
+                if (resp.headers.get('JWT-Header-Payload') != null)
+                    this.JWTPayload = resp.headers.get('JWT-Header-Payload')
+            });
     }
 
 
@@ -24,5 +28,4 @@ export class AppComponent {
         return this.http.get<String>("http://localhost:8080/login", {observe: 'response', withCredentials: true})
             .subscribe(resp => this.JWTPayload = resp.headers.get('JWT-Header-Payload'))
     }
-
 }

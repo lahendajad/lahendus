@@ -21,15 +21,13 @@ import javax.servlet.http.HttpServletResponse
 class JWTManager {
 
     @Autowired
-    private lateinit var subjectWhitelist: SubjectWhitelist
+    private lateinit var tokenWhitelist: TokenWhitelist
 
     companion object {
         private const val validDuration: Long = 24
     }
 
-    fun setNewJWT(response: HttpServletResponse, subject: String): Unit {
-        subjectWhitelist.addSubject(subject)
-
+    fun setNewJWT(response: HttpServletResponse, subject: String) {
         val jwt = Jwts.builder()
                 .setExpiration(Date.from(LocalDateTime.now().plusHours(validDuration).atZone(ZoneId.systemDefault()).toInstant()))
                 .setSubject(subject)
@@ -37,10 +35,12 @@ class JWTManager {
                 .signWith(SignatureAlgorithm.HS512, JWTController.KEY)
                 .compact()
 
-        response.addCookie(Cookie("JWT_SIGNATURE", jwt.split(".")[2]))
-        response.setHeader("JWT-Header-Payload", jwt.split(".")[0] + "." + jwt.split(".")[1])
-    }
+        tokenWhitelist.addToken(jwt)
+        val split = jwt.split(".")
 
+        response.addCookie(Cookie("JWT_SIGNATURE", split[2]))
+        response.setHeader("JWT-Header-Payload", split[0] + "." + split[1])
+    }
 
     fun checkValidJWTRequest(request: HttpServletRequest, response: HttpServletResponse) {
         // Get cookie header, where JWT. Cookie name: ...   - Signature
@@ -56,7 +56,7 @@ class JWTManager {
         val parsedJWT: Jws<Claims> = Jwts.parser().setSigningKey(JWTController.KEY).parseClaimsJws(jwt)
 
         // Check that JWT is not revoked
-        if (!subjectWhitelist.subjectIsAllowed(parsedJWT.body.subject)) return
+        if (!tokenWhitelist.tokenIsAllowed(jwt)) return
 
         // Update JWT every hour
         if (parsedJWT.body.expiration.before(Date.from(LocalDateTime.now()
