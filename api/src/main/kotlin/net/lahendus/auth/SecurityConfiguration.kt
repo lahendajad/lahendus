@@ -23,6 +23,7 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     private lateinit var jwtManager: JWTManager
 
     override fun configure(http: HttpSecurity) {
+        // TODO: try with in memory user and password
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         http.addFilter(AuthorizationFilter(authenticationManager(), jwtManager))
     }
