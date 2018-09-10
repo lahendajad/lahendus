@@ -20,13 +20,13 @@ class JWTController {
         val KEY: SecretKey = MacProvider.generateKey()
     }
 
-    @GetMapping("/login") //TODO: Google authentication.
-    fun login(response: HttpServletResponse) {
-        jwtManager.setNewJWT(response, "some@some.ee")
-    }
+//    @GetMapping("/login") //TODO: Google authentication.
+//    fun login(response: HttpServletResponse) {
+//        jwtManager.setNewJWT(response, "some@some.ee")
+//    }
 
 
-    @Secured("ROLE_ADMIN")
+    //@Secured("ROLE_ADMIN")
     @GetMapping("/test")
     fun test(auth: Authentication?, response: HttpServletResponse) {
         println(auth?.principal)

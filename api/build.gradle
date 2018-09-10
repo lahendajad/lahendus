@@ -1,7 +1,7 @@
 buildscript {
     ext {
         kotlinVersion = '1.2.51'
-        springBootVersion = '2.0.3.RELEASE'
+        springBootVersion = '2.0.4.RELEASE'
     }
 
     repositories {
@@ -32,6 +32,8 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-security'
     compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.6'
     compile 'io.jsonwebtoken:jjwt:0.9.1'
+    compile 'org.springframework.security:spring-security-oauth2-client'
+    compile 'org.springframework.security:spring-security-oauth2-jose'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
